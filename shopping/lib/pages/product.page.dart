@@ -1,71 +1,78 @@
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatelessWidget {
+  final String image;
+  final String title;
+  final String description;
+  final String price;
+
+  ProductPage({
+    @required this.image,
+    @required this.title,
+    @required this.description,
+    @required this.price,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.blue,
-        child: Center(
-          child: Text(
-            'Detalhes do produto',
-          ),
-        ),
-      ),
+      body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                backgroundColor: Colors.white.withOpacity(0),
+                elevation: 0.0,
+                expandedHeight: 500.0,
+                floating: false,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  background: Image.asset(
+                    'assets/product-10.png',
+                    width: double.infinity,
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: ListView(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                ),
+                child: Text(
+                  'Dry Fit Long Sleeve',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text('By Nike'),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Details',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
+                ),
+              )
+            ],
+          )),
     );
   }
-}
-
-Widget productItem() {
-  return Container(
-    padding: EdgeInsets.all(10),
-    margin: EdgeInsets.all(5),
-    width: 170,
-    color: Colors.black12,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Image.asset(
-          'assets/product-1.png',
-          width: 170,
-          height: 170,
-          fit: BoxFit.cover,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Container(
-          height: 60,
-          child: Text(
-            'Nome do produto',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          'Marca',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w300,
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          '\$ 200',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF00C569),
-          ),
-        )
-      ],
-    ),
-  );
 }
