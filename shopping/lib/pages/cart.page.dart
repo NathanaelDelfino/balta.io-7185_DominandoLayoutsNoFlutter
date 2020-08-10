@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopping/pages/home.page.dart';
 
 class CartPage extends StatelessWidget {
   @override
@@ -34,7 +33,7 @@ class CartPage extends StatelessWidget {
                       Text(
                         '\$4250',
                         style: TextStyle(
-                            color: Colors.green,
+                            color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
@@ -45,7 +44,7 @@ class CartPage extends StatelessWidget {
                   height: 50,
                   width: 150,
                   decoration: BoxDecoration(
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(5),
                   ),
                   margin: EdgeInsets.only(right: 20),
@@ -54,7 +53,7 @@ class CartPage extends StatelessWidget {
                     child: Text(
                       'Checkout',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).accentColor,
                       ),
                     ),
                   ),
@@ -113,7 +112,7 @@ Widget productItem(context, titulo, price, image) {
               Text(
                 '\$' + price,
                 style: TextStyle(
-                  color: Colors.green,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               SizedBox(

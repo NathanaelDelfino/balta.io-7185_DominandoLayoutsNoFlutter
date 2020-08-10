@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class ProductPage extends StatelessWidget {
   final String image;
   final String title;
+  final String marca;
   final String description;
   final String price;
 
   ProductPage({
     @required this.image,
     @required this.title,
+    @required this.marca,
     @required this.description,
     @required this.price,
   });
@@ -27,10 +29,13 @@ class ProductPage extends StatelessWidget {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  background: Image.asset(
-                    'assets/product-10.png',
-                    width: double.infinity,
-                    fit: BoxFit.fitWidth,
+                  background: Hero(
+                    tag: image,
+                    child: Image.asset(
+                      image,
+                      width: double.infinity,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 ),
               ),
@@ -45,7 +50,7 @@ class ProductPage extends StatelessWidget {
                   right: 10,
                 ),
                 child: Text(
-                  'Dry Fit Long Sleeve',
+                  title,
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -54,7 +59,7 @@ class ProductPage extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.all(10),
-                child: Text('By Nike'),
+                child: Text(marca),
               ),
               Padding(
                 padding: EdgeInsets.all(10),
@@ -68,7 +73,7 @@ class ProductPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  'Nike Dri-FIT is a polyester fabric designed to help you keep dry so you can more comfortably work harder, longer.',
+                  description,
                 ),
               )
             ],

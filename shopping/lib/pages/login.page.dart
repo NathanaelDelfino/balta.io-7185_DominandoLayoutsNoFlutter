@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shopping/pages/home.page.dart';
 import 'package:shopping/pages/signup.page.dart';
 
+// ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  String _email;
+  String _password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,111 +36,132 @@ class LoginPage extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: 15, right: 15, top: 40),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Column(
-                            children: <Widget>[
-                              Text(
-                                'Welcome',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Text(
+                                  'Welcome',
+                                  // ignore: deprecated_member_use
+                                  style: Theme.of(context).textTheme.display1,
                                 ),
-                              ),
-                              Text(
-                                'Sign to continue',
-                                style: TextStyle(
-                                  fontSize: 10,
+                                Text(
+                                  'Sign to continue',
+                                  // ignore: deprecated_member_use
+                                  style: Theme.of(context).textTheme.subhead,
                                 ),
-                              ),
-                            ],
-                          ),
-                          RaisedButton(
-                            child: Text('Sign Up'),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignupPage(),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16),
-                        ),
-                        style: TextStyle(
-                          fontSize: 20,
-                        ),
-                      ),
-                      Container(
-                        //color: Colors.yellow,
-                        height: 40,
-                        alignment: Alignment.centerRight,
-                        child: FlatButton(
-                          child: Text('Forgot your password?'),
-                          onPressed: () {},
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        child: FlatButton(
-                          child: Text(
-                            'Sign In',
-                            style: TextStyle(
-                              color: Colors.white,
+                              ],
                             ),
+                            RaisedButton(
+                              child: Text('Sign Up'),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignupPage(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextFormField(
+                          autofocus: true,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            labelStyle: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomePage(),
-                              ),
-                            );
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Invalid Email';
+                            }
+                            return null;
+                          },
+                          onSaved: (input) => _email = input,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Invalid Password';
+                            }
+                            return null;
                           },
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(5),
+                        Container(
+                          //color: Colors.yellow,
+                          height: 40,
+                          alignment: Alignment.centerRight,
+                          child: FlatButton(
+                            child: Text(
+                              'Forgot your password?',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                            onPressed: () {},
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          child: FlatButton(
+                            child: Text(
+                              'Sign In',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                _formKey.currentState.save();
+                                print(_email);
+                                print(_password);
+                                Scaffold.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Welcome, $_email'),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -159,7 +184,7 @@ class LoginPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 2.0,
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColor,
                   ),
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -189,7 +214,7 @@ class LoginPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 2.0,
-                    color: Colors.blue,
+                    color: Theme.of(context).primaryColor,
                   ),
                   borderRadius: BorderRadius.circular(5),
                 ),
